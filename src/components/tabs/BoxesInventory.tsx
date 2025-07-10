@@ -215,10 +215,14 @@ const BoxesInventory = () => {
                 </div>
                 <div className="flex flex-col items-end space-y-1">
                   {box.fragile && (
-                    <AlertTriangle className="w-4 h-4 text-orange-500" title="Fragile" />
+                    <div className="relative">
+                      <AlertTriangle className="w-4 h-4 text-orange-500" aria-label="Fragile item" />
+                    </div>
                   )}
                   {box.priority === 'high' && (
-                    <Star className="w-4 h-4 text-yellow-500" title="High Priority" />
+                    <div className="relative">
+                      <Star className="w-4 h-4 text-yellow-500" aria-label="High priority" />
+                    </div>
                   )}
                 </div>
               </div>

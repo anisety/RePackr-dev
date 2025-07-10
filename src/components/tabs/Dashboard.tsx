@@ -1,4 +1,3 @@
-
 import React from 'react';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Progress } from '@/components/ui/progress';
@@ -14,7 +13,7 @@ const Dashboard = () => {
     { label: 'Boxes Packed', value: '24', total: '40', icon: Package, color: 'blue' },
     { label: 'Tasks Complete', value: '18', total: '27', icon: CheckCircle, color: 'green' },
     { label: 'Pending Items', value: '5', total: null, icon: AlertTriangle, color: 'orange' },
-    { label: 'Days Remaining', value: daysUntilMove, total: null, icon: Calendar, color: 'purple' }
+    { label: 'Days Remaining', value: daysUntilMove.toString(), total: null, icon: Calendar, color: 'purple' }
   ];
 
   const recentActivity = [

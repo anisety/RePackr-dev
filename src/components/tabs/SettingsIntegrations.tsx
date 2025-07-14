@@ -32,10 +32,10 @@ const SettingsIntegrations = () => {
   });
 
   const [profile, setProfile] = useState({
-    name: 'Sarah Johnson',
-    email: 'sarah.johnson@email.com',
-    phone: '(555) 123-4567',
-    timezone: 'EST'
+    name: '',
+    email: '',
+    phone: '',
+    timezone: ''
   });
 
   const integrations = [

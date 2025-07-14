@@ -11,16 +11,16 @@ import { Calendar, MapPin, Clock, Users, Truck, Edit3, Save, X } from 'lucide-re
 const MoveDetails = () => {
   const [isEditing, setIsEditing] = useState(false);
   const [moveData, setMoveData] = useState({
-    moveDate: '2024-08-15',
-    fromAddress: '123 Oak Street, Austin, TX 78701',
-    toAddress: '456 Pine Avenue, New York, NY 10001',
-    movingCompany: 'Premier Moving Services',
-    truckSize: 'Large (26ft)',
-    estimatedTime: '6-8 hours',
-    specialInstructions: 'Piano requires special handling. Fragile items clearly marked.',
-    numberOfMovers: '4 movers',
-    contactPerson: 'Mike Johnson',
-    contactPhone: '(555) 123-4567'
+    moveDate: '',
+    fromAddress: '',
+    toAddress: '',
+    movingCompany: '',
+    truckSize: '',
+    estimatedTime: '',
+    specialInstructions: '',
+    numberOfMovers: '',
+    contactPerson: '',
+    contactPhone: ''
   });
 
   const handleSave = () => {

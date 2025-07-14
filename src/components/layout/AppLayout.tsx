@@ -54,10 +54,10 @@ const AppLayout = () => {
               <div className="w-8 h-8 bg-gradient-to-r from-blue-600 to-green-600 rounded-lg flex items-center justify-center">
                 <Package className="w-5 h-5 text-white" />
               </div>
-              <h1 className="text-xl font-semibold text-gray-900">MoveManager</h1>
+              <h1 className="text-xl font-semibold text-gray-900">RePackr</h1>
             </div>
             <div className="hidden sm:block text-sm text-gray-600">
-              Moving to: <span className="font-medium text-gray-900">New York, NY</span>
+              Moving to: <span className="font-medium text-gray-900">Aurora, IL</span>
             </div>
           </div>
         </div>

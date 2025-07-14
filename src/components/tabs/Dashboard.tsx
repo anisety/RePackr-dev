@@ -6,29 +6,19 @@ import { Badge } from '@/components/ui/badge';
 import { Calendar, CheckCircle, Package, AlertTriangle, TrendingUp } from 'lucide-react';
 
 const Dashboard = () => {
-  const moveProgress = 65;
-  const daysUntilMove = 18;
+  const moveProgress = 0;
+  const daysUntilMove = 0;
 
   const quickStats = [
-    { label: 'Boxes Packed', value: '24', total: '40', icon: Package, color: 'blue' },
-    { label: 'Tasks Complete', value: '18', total: '27', icon: CheckCircle, color: 'green' },
-    { label: 'Pending Items', value: '5', total: null, icon: AlertTriangle, color: 'orange' },
-    { label: 'Days Remaining', value: daysUntilMove.toString(), total: null, icon: Calendar, color: 'purple' }
+    { label: 'Boxes Packed', value: '', total: '', icon: Package, color: 'blue' },
+    { label: 'Tasks Complete', value: '', total: '', icon: CheckCircle, color: 'green' },
+    { label: 'Pending Items', value: '', total: null, icon: AlertTriangle, color: 'orange' },
+    { label: 'Days Remaining', value: '', total: null, icon: Calendar, color: 'purple' }
   ];
 
-  const recentActivity = [
-    { action: 'Packed kitchen essentials box', time: '2 hours ago', type: 'pack' },
-    { action: 'Completed utility transfer forms', time: '5 hours ago', type: 'task' },
-    { action: 'Updated moving truck reservation', time: '1 day ago', type: 'update' },
-    { action: 'Added bedroom furniture to inventory', time: '2 days ago', type: 'inventory' }
-  ];
+  const recentActivity = [];
 
-  const upcomingTasks = [
-    { task: 'Confirm moving truck pickup time', due: 'Today', priority: 'high' },
-    { task: 'Pack remaining kitchen items', due: 'Tomorrow', priority: 'medium' },
-    { task: 'Submit address change to bank', due: 'In 2 days', priority: 'high' },
-    { task: 'Pack master bedroom', due: 'In 3 days', priority: 'low' }
-  ];
+  const upcomingTasks = [];
 
   return (
     <div className="space-y-8">
@@ -37,9 +27,9 @@ const Dashboard = () => {
         <CardContent className="p-6">
           <div className="flex items-center justify-between">
             <div>
-              <h2 className="text-2xl font-bold mb-2">Welcome back, Sarah!</h2>
+              <h2 className="text-2xl font-bold mb-2">Welcome!</h2>
               <p className="text-blue-100 mb-4">
-                You're {moveProgress}% ready for your move to New York. Only {daysUntilMove} days to go!
+                Please enter your move details to get started.
               </p>
               <Progress value={moveProgress} className="w-full max-w-md bg-blue-500/30" />
             </div>

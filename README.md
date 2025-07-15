@@ -1,73 +1,145 @@
-# Welcome to your Lovable project
+# 🚚 AI Moving Helper
 
-## Project info
+Welcome to **AI Moving Helper**, your intelligent assistant for managing every aspect of a residential move — from packing to internet transfer, address updates, and furniture fitting. This tool empowers users to efficiently plan their move while maintaining visibility over key steps and logistics.
 
-**URL**: https://lovable.dev/projects/38856bc8-4f52-48e9-b66f-474ca4f0b929
+Built with **TypeScript**, **Tailwind CSS**, **Firebase Auth**, and **MongoDB**.
 
-## How can I edit this code?
+---
 
-There are several ways of editing your application.
+## 🛠️ Tech Stack
 
-**Use Lovable**
+| Layer       | Technology         |
+|-------------|--------------------|
+| Frontend    | React + TypeScript |
+| Styling     | Tailwind CSS       |
+| Backend     | Node.js + Express  |
+| Database    | MongoDB (Mongoose) |
+| Auth        | Firebase Auth      |
+| Hosting     | (e.g., Vercel / Render) |
 
-Simply visit the [Lovable Project](https://lovable.dev/projects/38856bc8-4f52-48e9-b66f-474ca4f0b929) and start prompting.
+---
 
-Changes made via Lovable will be committed automatically to this repo.
+## ✨ Features
 
-**Use your preferred IDE**
+- 🔐 **Secure login & user sessions** via Firebase Authentication
+- 📦 **Pack Label Generator** to categorize and print box labels
+- 🏠 **Address Update Portal** for quick USPS / utility address changes
+- 🪑 **Furniture Fit Checker** to ensure furniture fits in your new place
+- 🌐 **ISP Transfer Helper** to manage internet provider moves
+- 🧠 **AI Recommendations** for packing tips, reminders, and budgeting
+- 📆 **Move Timeline Tracker** with countdown and milestones
+- 🗂️ **Data Persistence** using MongoDB for user progress and saved tasks
 
-If you want to work locally using your own IDE, you can clone this repo and push changes. Pushed changes will also be reflected in Lovable.
+---
 
-The only requirement is having Node.js & npm installed - [install with nvm](https://github.com/nvm-sh/nvm#installing-and-updating)
+## 🧭 Project Structure
 
-Follow these steps:
+ai-moving-helper/
+├── backend/ # Express + MongoDB API
+│ ├── models/ # Mongoose schemas
+│ ├── routes/ # API routes
+│ ├── controllers/ # Route logic
+│ └── server.ts # Main server entry
+│
+├── frontend/ # React app
+│ ├── components/ # Reusable UI components
+│ ├── pages/ # Route-based pages (e.g., /pack, /fit)
+│ ├── hooks/ # Custom React hooks
+│ ├── services/ # Firebase + API utility wrappers
+│ ├── App.tsx # App wrapper
+│ └── main.tsx # Vite entry point
+│
+├── shared/ # Shared TypeScript types & interfaces
+├── .env # Environment variables
+├── README.md
+└── package.json
 
-```sh
-# Step 1: Clone the repository using the project's Git URL.
-git clone <YOUR_GIT_URL>
+yaml
+Copy
+Edit
 
-# Step 2: Navigate to the project directory.
-cd <YOUR_PROJECT_NAME>
+---
 
-# Step 3: Install the necessary dependencies.
-npm i
+## 🔐 Authentication Setup (Firebase)
 
-# Step 4: Start the development server with auto-reloading and an instant preview.
+1. Go to [Firebase Console](https://console.firebase.google.com)
+2. Create a new project
+3. Enable **Email/Password** under Authentication → Sign-in method
+4. Copy Firebase config and place it in `.env`:
+```env
+VITE_FIREBASE_API_KEY=your_key
+VITE_FIREBASE_AUTH_DOMAIN=your_domain
+...
+Use onAuthStateChanged in React to listen for user login state.
+
+🧾 Environment Variables
+makefile
+Copy
+Edit
+# Frontend
+VITE_FIREBASE_API_KEY=
+VITE_FIREBASE_AUTH_DOMAIN=
+
+# Backend
+MONGO_URI=your_mongodb_connection_string
+JWT_SECRET=your_secure_jwt_secret
+🧪 Sample User Flow
+User logs in with Firebase.
+
+Lands on Dashboard (/dashboard) showing Move Summary (T-32 days, From ZIP ⇨ To ZIP, Budget Tier).
+
+Clicks on:
+
+Pack Labels to print QR-coded tags
+
+Furniture Fit to enter room dimensions and test couch measurements
+
+Address Update to input old/new addresses for transfer
+
+ISP Helper to search local ISPs and transfer service
+
+User’s progress is saved to MongoDB.
+
+System uses AI to nudge tasks (e.g. “Don’t forget to update your voter registration!”).
+
+📦 Installation
+Prerequisites:
+Node.js 18+
+
+MongoDB Atlas or local instance
+
+Firebase project
+
+Frontend
+bash
+Copy
+Edit
+cd frontend
+npm install
 npm run dev
-```
+Backend
+bash
+Copy
+Edit
+cd backend
+npm install
+npm run dev
+✅ To Do
+ Improve AI prompt system for smart nudges
 
-**Edit a file directly in GitHub**
+ Add drag-and-drop to Pack Label UI
 
-- Navigate to the desired file(s).
-- Click the "Edit" button (pencil icon) at the top right of the file view.
-- Make your changes and commit the changes.
+ Enable SMS reminders via Twilio
 
-**Use GitHub Codespaces**
+ Add analytics dashboard for user engagement
 
-- Navigate to the main page of your repository.
-- Click on the "Code" button (green button) near the top right.
-- Select the "Codespaces" tab.
-- Click on "New codespace" to launch a new Codespace environment.
-- Edit files directly within the Codespace and commit and push your changes once you're done.
+📄 License
+MIT License. Use freely for personal or commercial projects — but give credit if you fork or build upon it.
 
-## What technologies are used for this project?
+💡 Notes
+The current deployed site reflects the final filled-out state. To use this project interactively, start from a blank slate and fill in information progressively to reach the end state.
 
-This project is built with:
+Do not modify the current layout or structure; instead, simulate user input from an empty state to reach completion.
 
-- Vite
-- TypeScript
-- React
-- shadcn-ui
-- Tailwind CSS
-
-## How can I deploy this project?
-
-Simply open [Lovable](https://lovable.dev/projects/38856bc8-4f52-48e9-b66f-474ca4f0b929) and click on Share -> Publish.
-
-## Can I connect a custom domain to my Lovable project?
-
-Yes, you can!
-
-To connect a domain, navigate to Project > Settings > Domains and click Connect Domain.
-
-Read more here: [Setting up a custom domain](https://docs.lovable.dev/tips-tricks/custom-domain#step-by-step-guide)
+🙌 Contributing
+Pull requests are welcome! Please follow conventional commit messages and add comments to major logic changes. See CONTRIBUTING.md for more details (coming soon).

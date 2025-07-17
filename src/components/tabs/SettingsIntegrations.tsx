@@ -7,138 +7,81 @@ import { Label } from '@/components/ui/label';
 import { Switch } from '@/components/ui/switch';
 import { Badge } from '@/components/ui/badge';
 import { Separator } from '@/components/ui/separator';
+import { CheckCircle, User, Bell, Mail, Smartphone, Calendar, ExternalLink, Shield, Settings as SettingsIcon, AlertTriangle, CreditCard } from 'lucide-react';
 import { Alert, AlertDescription } from '@/components/ui/alert';
-import { 
-  Bell, 
-  Mail, 
-  Smartphone, 
-  Calendar, 
-  MapPin, 
-  CreditCard, 
-  Shield, 
-  User, 
-  Settings as SettingsIcon,
-  ExternalLink,
-  CheckCircle,
-  AlertTriangle
-} from 'lucide-react';
 
-const SettingsIntegrations = () => {
+interface SettingsProps {
+  user?: string | null;
+  moveInfo?: { name: string; origin: string; destination: string } | null;
+}
+
+const SettingsIntegrations: React.FC<SettingsProps> = ({ user, moveInfo }) => {
+  // Profile settings are now handled in login/signup modal
   const [notifications, setNotifications] = useState({
     email: true,
     sms: false,
     push: true,
     reminders: true
   });
-
-  const [profile, setProfile] = useState({
-    name: '',
-    email: '',
-    phone: '',
-    timezone: ''
-  });
-
   const integrations = [
     {
       name: 'Google Calendar',
       description: 'Sync moving tasks and deadlines',
       connected: true,
       icon: Calendar,
-      status: 'active'
     },
     {
       name: 'Gmail',
       description: 'Import confirmations and receipts',
       connected: true,
       icon: Mail,
-      status: 'active'
     },
     {
       name: 'Google Maps',
       description: 'Route planning and location services',
       connected: false,
-      icon: MapPin,
-      status: 'available'
+      icon: ExternalLink,
     },
     {
       name: 'Banking/Payment',
       description: 'Track moving expenses',
       connected: false,
       icon: CreditCard,
-      status: 'available'
     }
   ];
-
   const toggleNotification = (type: string) => {
-    setNotifications(prev => ({
-      ...prev,
-      [type]: !prev[type]
-    }));
+    setNotifications(prev => ({ ...prev, [type]: !prev[type] }));
   };
-
   return (
     <div className="space-y-8">
-      {/* Header */}
+      {/* Header, Account Info, Move Info, and all cards below */}
       <div>
         <h2 className="text-2xl font-bold text-gray-900">Settings & Integrations</h2>
         <p className="text-gray-600 mt-1">Customize your experience and connect your accounts</p>
       </div>
-
+      <div className="mb-6">
+        <h3 className="text-lg font-semibold mb-2">Account Info</h3>
+        {user ? (
+          <div className="bg-white rounded shadow p-4 mb-4">
+            <div className="mb-2"><span className="font-medium">Username:</span> {user}</div>
+          </div>
+        ) : (
+          <div className="text-gray-500">Not logged in.</div>
+        )}
+      </div>
+      <div className="mb-6">
+        <h3 className="text-lg font-semibold mb-2">Move Info</h3>
+        {moveInfo ? (
+          <div className="bg-white rounded shadow p-4">
+            <div className="mb-2"><span className="font-medium">Name:</span> {moveInfo.name}</div>
+            <div className="mb-2"><span className="font-medium">Moving From:</span> {moveInfo.origin}</div>
+            <div className="mb-2"><span className="font-medium">Moving To:</span> {moveInfo.destination}</div>
+          </div>
+        ) : (
+          <div className="text-gray-500">No move info available.</div>
+        )}
+      </div>
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
-        {/* Profile Settings */}
-        <Card>
-          <CardHeader>
-            <CardTitle className="flex items-center space-x-2">
-              <User className="w-5 h-5 text-blue-600" />
-              <span>Profile Settings</span>
-            </CardTitle>
-          </CardHeader>
-          <CardContent className="space-y-6">
-            <div>
-              <Label htmlFor="fullName">Full Name</Label>
-              <Input
-                id="fullName"
-                value={profile.name}
-                onChange={(e) => setProfile({...profile, name: e.target.value})}
-                className="mt-1"
-              />
-            </div>
-            
-            <div>
-              <Label htmlFor="email">Email Address</Label>
-              <Input
-                id="email"
-                type="email"
-                value={profile.email}
-                onChange={(e) => setProfile({...profile, email: e.target.value})}
-                className="mt-1"
-              />
-            </div>
-            
-            <div>
-              <Label htmlFor="phone">Phone Number</Label>
-              <Input
-                id="phone"
-                value={profile.phone}
-                onChange={(e) => setProfile({...profile, phone: e.target.value})}
-                className="mt-1"
-              />
-            </div>
-
-            <div>
-              <Label htmlFor="timezone">Timezone</Label>
-              <Input
-                id="timezone"
-                value={profile.timezone}
-                onChange={(e) => setProfile({...profile, timezone: e.target.value})}
-                className="mt-1"
-              />
-            </div>
-
-            <Button className="w-full">Save Profile Changes</Button>
-          </CardContent>
-        </Card>
-
         {/* Notification Settings */}
         <Card>
           <CardHeader>
@@ -162,7 +105,6 @@ const SettingsIntegrations = () => {
                   onCheckedChange={() => toggleNotification('email')}
                 />
               </div>
-
               <div className="flex items-center justify-between">
                 <div className="flex items-center space-x-3">
                   <Smartphone className="w-4 h-4 text-gray-600" />
@@ -176,7 +118,6 @@ const SettingsIntegrations = () => {
                   onCheckedChange={() => toggleNotification('sms')}
                 />
               </div>
-
               <div className="flex items-center justify-between">
                 <div className="flex items-center space-x-3">
                   <Bell className="w-4 h-4 text-gray-600" />
@@ -190,7 +131,6 @@ const SettingsIntegrations = () => {
                   onCheckedChange={() => toggleNotification('push')}
                 />
               </div>
-
               <div className="flex items-center justify-between">
                 <div className="flex items-center space-x-3">
                   <Calendar className="w-4 h-4 text-gray-600" />
@@ -205,7 +145,6 @@ const SettingsIntegrations = () => {
                 />
               </div>
             </div>
-
             <Alert>
               <AlertTriangle className="h-4 w-4" />
               <AlertDescription>
@@ -215,7 +154,6 @@ const SettingsIntegrations = () => {
           </CardContent>
         </Card>
       </div>
-
       {/* Integrations */}
       <Card>
         <CardHeader>
@@ -229,7 +167,7 @@ const SettingsIntegrations = () => {
             {integrations.map((integration, index) => {
               const Icon = integration.icon;
               return (
-                <div key={index}>
+                <React.Fragment key={index}>
                   <div className="flex items-center justify-between p-4 rounded-lg border hover:bg-gray-50 transition-colors">
                     <div className="flex items-center space-x-4">
                       <div className="w-10 h-10 bg-gray-100 rounded-lg flex items-center justify-center">
@@ -242,8 +180,8 @@ const SettingsIntegrations = () => {
                     </div>
                     <div className="flex items-center space-x-3">
                       {integration.connected ? (
-                        <>
-                          <Badge className="bg-green-100 text-green-800">
+                        <div className="flex items-center space-x-2">
+                          <Badge className="bg-green-100 text-green-800 flex items-center">
                             <CheckCircle className="w-3 h-3 mr-1" />
                             Connected
                           </Badge>
@@ -253,7 +191,7 @@ const SettingsIntegrations = () => {
                           <Button variant="ghost" size="sm" className="text-red-600 hover:text-red-700">
                             Disconnect
                           </Button>
-                        </>
+                        </div>
                       ) : (
                         <Button size="sm" className="flex items-center space-x-1">
                           <span>Connect</span>
@@ -263,13 +201,12 @@ const SettingsIntegrations = () => {
                     </div>
                   </div>
                   {index < integrations.length - 1 && <Separator className="my-4" />}
-                </div>
+                </React.Fragment>
               );
             })}
           </div>
         </CardContent>
       </Card>
-
       {/* Privacy & Security */}
       <Card>
         <CardHeader>
@@ -289,14 +226,12 @@ const SettingsIntegrations = () => {
               <span>Two-Factor Auth</span>
             </Button>
           </div>
-
           <Alert>
             <Shield className="h-4 w-4" />
             <AlertDescription>
               Your data is encrypted and secure. We never share your personal information with third parties without your consent.
             </AlertDescription>
           </Alert>
-
           <div className="pt-4 border-t">
             <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between space-y-2 sm:space-y-0">
               <div>
@@ -306,7 +241,6 @@ const SettingsIntegrations = () => {
               <Button variant="outline">Download Data</Button>
             </div>
           </div>
-
           <div className="pt-4 border-t">
             <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between space-y-2 sm:space-y-0">
               <div>

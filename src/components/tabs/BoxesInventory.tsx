@@ -16,52 +16,19 @@ const BoxesInventory = () => {
   const [filterRoom, setFilterRoom] = useState('all');
   const [isAddingBox, setIsAddingBox] = useState(false);
 
-  const [boxes, setBoxes] = useState([
-    {
-      id: 'BOX-001',
-      label: 'Kitchen Essentials',
-      room: 'Kitchen',
-      contents: ['Plates', 'Cups', 'Utensils', 'Can opener'],
-      priority: 'high',
-      packed: true,
-      weight: 'Medium',
-      fragile: false,
-      notes: 'First day essentials'
-    },
-    {
-      id: 'BOX-002',
-      label: 'Living Room Books',
-      room: 'Living Room',
-      contents: ['Fiction books', 'Magazines', 'Photo albums'],
-      priority: 'low',
-      packed: true,
-      weight: 'Heavy',
-      fragile: false,
-      notes: ''
-    },
-    {
-      id: 'BOX-003',
-      label: 'Bedroom Linens',
-      room: 'Bedroom',
-      contents: ['Sheets', 'Pillowcases', 'Blankets', 'Towels'],
-      priority: 'medium',
-      packed: false,
-      weight: 'Light',
-      fragile: false,
-      notes: 'Pack last - using until move day'
-    },
-    {
-      id: 'BOX-004',
-      label: 'Fragile Dinnerware',
-      room: 'Kitchen',
-      contents: ['China plates', 'Wine glasses', 'Crystal vase'],
-      priority: 'high',
-      packed: true,
-      weight: 'Medium',
-      fragile: true,
-      notes: 'Handle with extreme care'
-    }
-  ]);
+  // Start with empty boxes, user adds them interactively
+  const [boxes, setBoxes] = useState([]);
+
+  const [newBox, setNewBox] = useState({
+    label: '',
+    room: '',
+    contents: '',
+    priority: 'low',
+    packed: false,
+    weight: '',
+    fragile: false,
+    notes: ''
+  });
 
   const rooms = ['Kitchen', 'Living Room', 'Bedroom', 'Bathroom', 'Office', 'Garage'];
   const totalBoxes = boxes.length;
@@ -70,15 +37,44 @@ const BoxesInventory = () => {
 
   const filteredBoxes = boxes.filter(box => {
     const matchesSearch = box.label.toLowerCase().includes(searchTerm.toLowerCase()) ||
-                         box.contents.some(item => item.toLowerCase().includes(searchTerm.toLowerCase()));
+      (Array.isArray(box.contents) ? box.contents.some(item => item.toLowerCase().includes(searchTerm.toLowerCase())) : false);
     const matchesRoom = filterRoom === 'all' || box.room === filterRoom;
     return matchesSearch && matchesRoom;
   });
 
   const toggleBoxPacked = (boxId: string) => {
-    setBoxes(boxes.map(box => 
+    setBoxes(boxes.map(box =>
       box.id === boxId ? { ...box, packed: !box.packed } : box
     ));
+  };
+
+  const handleAddBox = () => {
+    if (!newBox.label || !newBox.room || !newBox.contents) return;
+    setBoxes([
+      ...boxes,
+      {
+        id: `BOX-${boxes.length + 1}`,
+        label: newBox.label,
+        room: newBox.room,
+        contents: newBox.contents.split(',').map(item => item.trim()),
+        priority: newBox.priority,
+        packed: newBox.packed,
+        weight: newBox.weight,
+        fragile: newBox.fragile,
+        notes: newBox.notes
+      }
+    ]);
+    setNewBox({
+      label: '',
+      room: '',
+      contents: '',
+      priority: 'low',
+      packed: false,
+      weight: '',
+      fragile: false,
+      notes: ''
+    });
+    setIsAddingBox(false);
   };
 
   const getPriorityColor = (priority: string) => {
@@ -113,11 +109,17 @@ const BoxesInventory = () => {
             <div className="space-y-4 py-4">
               <div>
                 <Label htmlFor="boxLabel">Box Label</Label>
-                <Input id="boxLabel" placeholder="e.g., Kitchen Essentials" className="mt-1" />
+                <Input
+                  id="boxLabel"
+                  placeholder="e.g., Kitchen Essentials"
+                  className="mt-1"
+                  value={newBox.label}
+                  onChange={e => setNewBox({ ...newBox, label: e.target.value })}
+                />
               </div>
               <div>
                 <Label htmlFor="boxRoom">Room</Label>
-                <Select>
+                <Select value={newBox.room} onValueChange={val => setNewBox({ ...newBox, room: val })}>
                   <SelectTrigger className="mt-1">
                     <SelectValue placeholder="Select room" />
                   </SelectTrigger>
@@ -130,15 +132,60 @@ const BoxesInventory = () => {
               </div>
               <div>
                 <Label htmlFor="boxContents">Contents</Label>
-                <Textarea 
-                  id="boxContents" 
-                  placeholder="List the items in this box..."
+                <Textarea
+                  id="boxContents"
+                  placeholder="List the items in this box, separated by commas..."
                   className="mt-1"
                   rows={3}
+                  value={newBox.contents}
+                  onChange={e => setNewBox({ ...newBox, contents: e.target.value })}
+                />
+              </div>
+              <div>
+                <Label htmlFor="boxWeight">Weight</Label>
+                <Input
+                  id="boxWeight"
+                  placeholder="e.g., Light, Medium, Heavy"
+                  className="mt-1"
+                  value={newBox.weight}
+                  onChange={e => setNewBox({ ...newBox, weight: e.target.value })}
+                />
+              </div>
+              <div>
+                <Label htmlFor="boxPriority">Priority</Label>
+                <Select value={newBox.priority} onValueChange={val => setNewBox({ ...newBox, priority: val })}>
+                  <SelectTrigger className="mt-1">
+                    <SelectValue placeholder="Select priority" />
+                  </SelectTrigger>
+                  <SelectContent>
+                    <SelectItem value="high">High</SelectItem>
+                    <SelectItem value="medium">Medium</SelectItem>
+                    <SelectItem value="low">Low</SelectItem>
+                  </SelectContent>
+                </Select>
+              </div>
+              <div className="flex items-center space-x-2 mt-2">
+                <input
+                  type="checkbox"
+                  id="fragile"
+                  checked={newBox.fragile}
+                  onChange={e => setNewBox({ ...newBox, fragile: e.target.checked })}
+                />
+                <Label htmlFor="fragile">Fragile</Label>
+              </div>
+              <div>
+                <Label htmlFor="boxNotes">Notes</Label>
+                <Textarea
+                  id="boxNotes"
+                  placeholder="Any notes about this box..."
+                  className="mt-1"
+                  rows={2}
+                  value={newBox.notes}
+                  onChange={e => setNewBox({ ...newBox, notes: e.target.value })}
                 />
               </div>
               <div className="flex space-x-4">
-                <Button onClick={() => setIsAddingBox(false)} className="flex-1">
+                <Button onClick={handleAddBox} className="flex-1">
                   Add Box
                 </Button>
                 <Button variant="outline" onClick={() => setIsAddingBox(false)} className="flex-1">
